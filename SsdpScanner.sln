@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SsdpScanner", "SsdpScanner\SsdpScanner.csproj", "{CDF4ACF0-6672-4CD5-BAEB-F7AC056BA80C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ssdp", "ssdp\ssdp.csproj", "{55FB5A99-072A-4A09-9E93-22C0D3AE6FB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{CDF4ACF0-6672-4CD5-BAEB-F7AC056BA80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDF4ACF0-6672-4CD5-BAEB-F7AC056BA80C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDF4ACF0-6672-4CD5-BAEB-F7AC056BA80C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{55FB5A99-072A-4A09-9E93-22C0D3AE6FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55FB5A99-072A-4A09-9E93-22C0D3AE6FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55FB5A99-072A-4A09-9E93-22C0D3AE6FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55FB5A99-072A-4A09-9E93-22C0D3AE6FB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

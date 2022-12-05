@@ -8,3 +8,11 @@
 /SsdpScanner/obj/Debug/net7.0-maccatalyst/maccatalyst-x64
 /SsdpScanner/obj/Debug/net7.0-windows10.0.19041.0/win10-x64
 /SsdpScanner/obj
+/.vs/SsdpScanner/DesignTimeBuild
+/SsdpScanner/.vs/ProjectEvaluation
+/SsdpScanner/bin/Debug/net7.0-android
+/SsdpScanner/bin/Debug/net7.0-ios/iossimulator-x64
+/SsdpScanner/bin/Debug/net7.0-maccatalyst/maccatalyst-x64
+/ssdp/bin/Debug/net7.0
+/ssdp/obj/Debug/net7.0
+/ssdp/obj
