@@ -22,7 +22,7 @@ namespace Ssdp
                     {
                         foreach (UnicastIPAddressInformation ip in adapterProperties.UnicastAddresses)
                         {
-                            if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
                                 return ip.Address;
                             }

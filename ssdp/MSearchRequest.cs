@@ -22,7 +22,7 @@ namespace Ssdp
 
         internal byte[] GetHeaderData()
         {
-            return ASCIIEncoding.ASCII.GetBytes(header);
+            return Encoding.ASCII.GetBytes(header);
         }
     }
 }

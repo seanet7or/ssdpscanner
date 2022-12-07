@@ -79,7 +79,8 @@ namespace Ssdp
                     }
                 }
             }
-            await Task.Delay((searchRequest.MaxWaitTimeInSecs + 1) * 1000);
+            // Wait 2 extra seconds if a delayed answer is received
+            await Task.Delay((searchRequest.MaxWaitTimeInSecs + 2) * 1000);
         }
 
         void ReceiveCallback(IAsyncResult ar)
@@ -108,13 +109,21 @@ namespace Ssdp
                             }
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Unexpected response: " +  receiveString);
+                    }
                 }
             }
+            // ObjectDisposedException or SocketException may occur if a late answer is received, but the socket is already closed. We can ignore these errors.
             catch (ObjectDisposedException)
             {
 
             }
-            //Console.WriteLine("Received from {1}:\n{0}", receiveString, remoteEndpoint.ToString());
+            catch (System.Net.Sockets.SocketException)
+            {
+
+            }
         }
     }
 }
