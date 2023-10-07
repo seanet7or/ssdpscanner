@@ -7,7 +7,7 @@ namespace Ssdp
         // shall also be able to accept UUIDs that have not been formatted according to the rules specified below,
         // as formatting rules are not specified in UPnP 1.0 other than the requirement that a UUID is a string.
         // [ UPNP DA 2.0 p23 ]
-        internal string? Id
+        public string? Id
         {
             get;
             private set;
