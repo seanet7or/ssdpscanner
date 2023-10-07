@@ -39,8 +39,8 @@ namespace Ssdp
 
         public EventHandler<DeviceDiscoveredEventArgs>? DeviceDiscovered { get; set; }
 
-        readonly ConcurrentDictionary<string, MSearchResponse> searchResponses
-            = new ConcurrentDictionary<string, MSearchResponse>();
+        readonly ConcurrentDictionary<string, MSearchResponse> searchResponses =
+            new ConcurrentDictionary<string, MSearchResponse>();
         bool disposed;
 
         public DeviceDiscovery(IEnumerable<IPAddress> ipAddressesToSendDiscoveryRequest)
@@ -72,9 +72,14 @@ namespace Ssdp
                     client.BeginReceive(ReceiveCallback, client);
                     for (int i = 0; i < RequestsToSend; i++)
                     {
-                        client.Send(searchRequestData,
+                        client.Send(
+                            searchRequestData,
                             searchRequestData.Length,
-                            new IPEndPoint(IPAddress.Parse(Defines.MulticastIpv4Address), Defines.SsdpPort));
+                            new IPEndPoint(
+                                IPAddress.Parse(Defines.MulticastIpv4Address),
+                                Defines.SsdpPort
+                            )
+                        );
                         await Task.Delay(SearchRequestsInterval);
                     }
                 }
@@ -104,26 +109,26 @@ namespace Ssdp
                             {
                                 if (DeviceDiscovered != null)
                                 {
-                                    DeviceDiscovered(this, new DeviceDiscoveredEventArgs(searchResponse, remoteEndpoint));
+                                    DeviceDiscovered(
+                                        this,
+                                        new DeviceDiscoveredEventArgs(
+                                            searchResponse,
+                                            remoteEndpoint
+                                        )
+                                    );
                                 }
                             }
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Unexpected response: " +  receiveString);
+                        Console.WriteLine("Unexpected response: " + receiveString);
                     }
                 }
             }
             // ObjectDisposedException or SocketException may occur if a late answer is received, but the socket is already closed. We can ignore these errors.
-            catch (ObjectDisposedException)
-            {
-
-            }
-            catch (System.Net.Sockets.SocketException)
-            {
-
-            }
+            catch (ObjectDisposedException) { }
+            catch (System.Net.Sockets.SocketException) { }
         }
     }
 }

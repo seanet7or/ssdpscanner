@@ -9,10 +9,13 @@ public class MainPage : ContentPage
 
     ObservableCollection<Device> devices = new ObservableCollection<Device>();
 
-
     public MainPage()
     {
-        logLb = new Label { HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
+        logLb = new Label
+        {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
 
         var scanBn = new Button { Text = "Scan" };
         scanBn.Clicked += async (object sender, EventArgs e) => await Scan();
@@ -35,17 +38,14 @@ public class MainPage : ContentPage
                         Padding = new Thickness(0, 5),
                         Orientation = StackOrientation.Horizontal,
                         Children =
-                                {
-                                    new StackLayout
-                                    {
-                                        VerticalOptions = LayoutOptions.Center,
-                                        Spacing = 0,
-                                        Children =
-                                        {
-                                            nameLabel,
-                                        }
-                                     }
-                                }
+                        {
+                            new StackLayout
+                            {
+                                VerticalOptions = LayoutOptions.Center,
+                                Spacing = 0,
+                                Children = { nameLabel, }
+                            }
+                        }
                     }
                 };
             })
@@ -55,8 +55,7 @@ public class MainPage : ContentPage
         {
             await this.Scan();
             deviceListView.IsRefreshing = false;
-        }
-        );
+        });
 
         var grid = new Grid
         {
@@ -65,18 +64,11 @@ public class MainPage : ContentPage
                 new RowDefinition { Height = new GridLength(100) },
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-
             },
-            ColumnDefinitions =
-            {
-                new ColumnDefinition()
-            }
+            ColumnDefinitions = { new ColumnDefinition() }
         };
 
-        var logView = new ScrollView
-        {
-            Content = logLb
-        };
+        var logView = new ScrollView { Content = logLb };
         grid.Add(scanBn, 0, 0);
         grid.Add(deviceListView, 0, 1);
         grid.Add(logView, 0, 2);
@@ -100,7 +92,6 @@ public class MainPage : ContentPage
 
     void OnDeviceDiscovered(object sender, DeviceDiscoveredEventArgs e)
     {
-
         MainThread.BeginInvokeOnMainThread(() =>
         {
             logLb.Text += e.SearchResponse.Header;

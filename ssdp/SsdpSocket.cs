@@ -6,7 +6,7 @@ namespace Ssdp
 {
     class SsdpSocket : Socket
     {
-        // Upnp 1.1: Note: The TTL for the IP packet SHOULD default to 2 and SHOULD be configurable. 
+        // Upnp 1.1: Note: The TTL for the IP packet SHOULD default to 2 and SHOULD be configurable.
         // Upnp 1.0: TTL SHOULD default to 4
         const int SsdpTtl = 4;
 
@@ -20,7 +20,9 @@ namespace Ssdp
 
                     if (adapterProperties.GatewayAddresses.FirstOrDefault() != null)
                     {
-                        foreach (UnicastIPAddressInformation ip in adapterProperties.UnicastAddresses)
+                        foreach (
+                            UnicastIPAddressInformation ip in adapterProperties.UnicastAddresses
+                        )
                         {
                             if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
@@ -39,7 +41,11 @@ namespace Ssdp
             SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
             SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, SsdpTtl);
-            SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse(Defines.MulticastIpv4Address), address));
+            SetSocketOption(
+                SocketOptionLevel.IP,
+                SocketOptionName.AddMembership,
+                new MulticastOption(IPAddress.Parse(Defines.MulticastIpv4Address), address)
+            );
 
             Bind(new IPEndPoint(address, 0));
         }

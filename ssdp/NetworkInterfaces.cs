@@ -23,9 +23,14 @@ namespace Ssdp
 
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (item.OperationalStatus == OperationalStatus.Up && item.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                if (
+                    item.OperationalStatus == OperationalStatus.Up
+                    && item.NetworkInterfaceType != NetworkInterfaceType.Loopback
+                )
                 {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                    foreach (
+                        UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses
+                    )
                     {
                         if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                         {
@@ -36,6 +41,5 @@ namespace Ssdp
             }
             return addresses;
         }
-
     }
 }

@@ -17,10 +17,7 @@ namespace Ssdp
 
         public bool Connected
         {
-            get
-            {
-                return Client != null;
-            }
+            get { return Client != null; }
         }
     }
 }

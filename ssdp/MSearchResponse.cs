@@ -7,61 +7,37 @@ namespace Ssdp
         // shall also be able to accept UUIDs that have not been formatted according to the rules specified below,
         // as formatting rules are not specified in UPnP 1.0 other than the requirement that a UUID is a string.
         // [ UPNP DA 2.0 p23 ]
-        public string? Id
-        {
-            get;
-            private set;
-        }
+        public string? Id { get; private set; }
 
         // Field value contains Search Target. Single URI, required
-        public string? SearchTarget
-        {
-            get;
-            private set;
-        }
+        public string? SearchTarget { get; private set; }
 
         // Description, Single absolute URL, required
-        public string? Location
-        {
-            get;
-            private set;
-        }
+        public string? Location { get; private set; }
 
         // OS/version UPnP/2.0 product/version, required
-        public string? Server
-        {
-            get;
-            private set;
-        }
+        public string? Server { get; private set; }
 
         // uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:ver
         // uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:ver
         // uuid:device-UUID::urn:domain-name:device:deviceType:ver
         // uuid:device-UUID::urn:domain-name:service:serviceType:ver
-        public string? Usn
-        {
-            get;
-            private set;
-        }
+        public string? Usn { get; private set; }
 
-        public string? Header
-        {
-            get;
-            private set;
-        }
+        public string? Header { get; private set; }
 
         public bool IsValid
         {
             get
             {
                 return validResponseLine
-                && (secondsToCache >= 0)
-                && (!string.IsNullOrEmpty(Location))
-                && (!string.IsNullOrEmpty(Server))
-                && (!string.IsNullOrEmpty(SearchTarget))
-                && (!string.IsNullOrEmpty(Usn))
-                && (!string.IsNullOrEmpty(Id))
-                && (!Id.Equals(Guid.Empty));
+                    && (secondsToCache >= 0)
+                    && (!string.IsNullOrEmpty(Location))
+                    && (!string.IsNullOrEmpty(Server))
+                    && (!string.IsNullOrEmpty(SearchTarget))
+                    && (!string.IsNullOrEmpty(Usn))
+                    && (!string.IsNullOrEmpty(Id))
+                    && (!Id.Equals(Guid.Empty));
             }
         }
 
@@ -73,13 +49,20 @@ namespace Ssdp
 
                 try
                 {
-                    foreach (var line in receivedHeader.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+                    foreach (
+                        var line in receivedHeader.Split(
+                            new[] { "\r\n" },
+                            StringSplitOptions.RemoveEmptyEntries
+                        )
+                    )
                     {
                         if (line == "HTTP/1.1 200 OK")
                         {
                             validResponseLine = true;
                         }
-                        else if (line.StartsWith("CACHE-CONTROL:", StringComparison.OrdinalIgnoreCase))
+                        else if (
+                            line.StartsWith("CACHE-CONTROL:", StringComparison.OrdinalIgnoreCase)
+                        )
                         {
                             var maxAge = line.Substring(14).Trim();
                             var seconds = maxAge.Split('=').ElementAt(1).Trim();
