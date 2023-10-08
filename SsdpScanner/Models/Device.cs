@@ -1,4 +1,4 @@
-﻿namespace SsdpScanner
+﻿namespace SsdpScanner.Models
 {
     public class Device
     {

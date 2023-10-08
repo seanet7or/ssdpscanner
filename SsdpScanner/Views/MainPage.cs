@@ -1,13 +1,14 @@
 using Ssdp;
+using SsdpScanner.Models;
 using System.Collections.ObjectModel;
 
-namespace SsdpScanner;
+namespace SsdpScanner.Views;
 
 public class MainPage : ContentPage
 {
     private readonly Label logLb;
 
-    readonly ObservableCollection<Device> devices = new();
+    readonly ObservableCollection<Models.Device> devices = new();
 
     public MainPage()
     {
@@ -18,7 +19,7 @@ public class MainPage : ContentPage
         };
 
         var scanBn = new Button { Text = "Scan" };
-        scanBn.Clicked += async (object sender, EventArgs e) => await Scan();
+        scanBn.Clicked += async (sender, e) => await Scan();
 
         var deviceListView = new ListView
         {
@@ -54,7 +55,7 @@ public class MainPage : ContentPage
         };
         deviceListView.RefreshCommand = new Command(async () =>
         {
-            await this.Scan();
+            await Scan();
             deviceListView.IsRefreshing = false;
         });
 
@@ -92,13 +93,13 @@ public class MainPage : ContentPage
     void OnDeviceDiscovered(object sender, DeviceDiscoveredEventArgs e)
     {
         var location = e.SearchResponse.Location;
-        if (!this.devices.Any((d) => d.Location == location))
+        if (!devices.Any((d) => d.Location == location))
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 logLb.Text += e.SearchResponse.Header;
                 devices.Add(
-                    new Device
+                    new Models.Device
                     {
                         DisplayName = e.SearchResponse.Usn,
                         Location = e.SearchResponse.Location
