@@ -5,9 +5,9 @@ namespace SsdpScanner;
 
 public class MainPage : ContentPage
 {
-    private Label logLb;
+    private readonly Label logLb;
 
-    ObservableCollection<Device> devices = new ObservableCollection<Device>();
+    readonly ObservableCollection<Device> devices = new();
 
     public MainPage()
     {
@@ -24,33 +24,34 @@ public class MainPage : ContentPage
         {
             VerticalScrollBarVisibility = ScrollBarVisibility.Always,
             IsPullToRefreshEnabled = true,
+            RowHeight = 100,
             ItemTemplate = new DataTemplate(() =>
             {
-                // Create views with bindings for displaying each property.
-                Label nameLabel = new Label();
+                var nameLabel = new Label();
                 nameLabel.SetBinding(Label.TextProperty, "DisplayName");
 
-                // Return an assembled ViewCell.
-                return new ViewCell
+                var locationLabel = new Label();
+                locationLabel.SetBinding(Label.TextProperty, "Location");
+
+                var grid = new Grid
                 {
-                    View = new StackLayout
+                    RowDefinitions =
                     {
-                        Padding = new Thickness(0, 5),
-                        Orientation = StackOrientation.Horizontal,
-                        Children =
-                        {
-                            new StackLayout
-                            {
-                                VerticalOptions = LayoutOptions.Center,
-                                Spacing = 0,
-                                Children = { nameLabel, }
-                            }
-                        }
-                    }
+                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                    },
+                    ColumnDefinitions = { new ColumnDefinition() }
                 };
-            })
+
+                grid.Add(nameLabel, 0, 1);
+                grid.Add(locationLabel, 0, 2);
+
+                return new ViewCell { View = grid };
+            }),
+            ItemsSource = devices
         };
-        deviceListView.ItemsSource = devices;
         deviceListView.RefreshCommand = new Command(async () =>
         {
             await this.Scan();
@@ -83,19 +84,27 @@ public class MainPage : ContentPage
 
         logLb.Text += string.Join(", ", addresses.Select(a => a.ToString()));
 
-        using (var deviceDiscovery = new DeviceDiscovery(addresses))
-        {
-            deviceDiscovery.DeviceDiscovered += OnDeviceDiscovered;
-            await deviceDiscovery.SearchAsync(5);
-        }
+        using var deviceDiscovery = new DeviceDiscovery(addresses);
+        deviceDiscovery.DeviceDiscovered += OnDeviceDiscovered;
+        await deviceDiscovery.SearchAsync(5);
     }
 
     void OnDeviceDiscovered(object sender, DeviceDiscoveredEventArgs e)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        var location = e.SearchResponse.Location;
+        if (!this.devices.Any((d) => d.Location == location))
         {
-            logLb.Text += e.SearchResponse.Header;
-            devices.Add(new Device { DisplayName = e.SearchResponse.Usn });
-        });
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                logLb.Text += e.SearchResponse.Header;
+                devices.Add(
+                    new Device
+                    {
+                        DisplayName = e.SearchResponse.Usn,
+                        Location = e.SearchResponse.Location
+                    }
+                );
+            });
+        }
     }
 }
