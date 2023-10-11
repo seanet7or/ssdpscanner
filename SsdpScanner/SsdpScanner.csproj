@@ -54,6 +54,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ssdp\ssdp.csproj" />
+	  <ProjectReference Include="..\upnp\upnp.csproj" />
 	</ItemGroup>
 
 </Project>

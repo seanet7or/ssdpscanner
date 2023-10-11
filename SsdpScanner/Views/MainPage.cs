@@ -1,5 +1,4 @@
 using Ssdp;
-using SsdpScanner.Models;
 using System.Collections.ObjectModel;
 
 namespace SsdpScanner.Views;
