@@ -50,8 +50,7 @@ namespace upnp.Services.ContentDirectory
 
         public override bool Equals(object? obj)
         {
-            var other = obj as UpnpResource;
-            if (other != null)
+            if (obj is UpnpResource other)
             {
                 return Uri == other.Uri;
             }
@@ -100,10 +99,6 @@ namespace upnp.Services.ContentDirectory
         // The string may be preceded by an optional + or – sign, and the decimal point itself may be omitted if there are no fractional second digits.
         public string? Duration { get; private set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         public string Uri { get; private set; }
 
         // XAuflösung in Pixel
@@ -136,10 +131,6 @@ namespace upnp.Services.ContentDirectory
 
         readonly int _colorDepth = -1;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         public UpnpProtocolInfo? ProtocolInfo { get; private set; }
 
         public UpnpResource(XmlReader reader)
@@ -168,16 +159,16 @@ namespace upnp.Services.ContentDirectory
                             Duration = reader.Value;
                             break;
                         case "bitrate":
-                            uint.TryParse(reader.Value, out _bitrate);
+                            _ = uint.TryParse(reader.Value, out _bitrate);
                             break;
                         case "sampleFrequency":
-                            uint.TryParse(reader.Value, out _sampleFrequency);
+                            _ = uint.TryParse(reader.Value, out _sampleFrequency);
                             break;
                         case "nrAudioChannels":
-                            uint.TryParse(reader.Value, out _nrAudioChannels);
+                            _ = uint.TryParse(reader.Value, out _nrAudioChannels);
                             break;
                         case "bitsPerSample":
-                            uint.TryParse(reader.Value, out _bitsPerSample);
+                            _ = uint.TryParse(reader.Value, out _bitsPerSample);
                             break;
                         case "microsoft:codec":
                             // scheinbar Guids, z.B. "{00000001-0000-0010-8000-00AA00389B71}" od "{00000055-0000-0010-8000-00AA00389B71}"

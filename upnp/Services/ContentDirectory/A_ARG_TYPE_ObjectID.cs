@@ -2,7 +2,7 @@
 {
     public class ArgTypeObjectId
     {
-        string objectId;
+        readonly string objectId;
 
         public override string ToString()
         {

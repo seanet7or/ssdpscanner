@@ -9,23 +9,13 @@ namespace upnp.Services
 {
     class AllowedValueRange
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        string? minimum;
+#pragma warning disable IDE0052 // Remove unread private members
+        readonly string? minimum;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        string? maximum;
+        readonly string? maximum;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        string? step;
+        readonly string? step;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public AllowedValueRange(XmlReader reader)
         {

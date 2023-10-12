@@ -11,10 +11,6 @@ namespace upnp.Devices
     {
         readonly MSearchResponse searchResponse;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal SpecVersion? SpecVersion { get; private set; }
 
         public IUpnpDevice? Device
@@ -29,7 +25,7 @@ namespace upnp.Devices
             this.httpClient = httpClient;
         }
 
-        IHttpClient httpClient;
+        readonly IHttpClient httpClient;
 
         static string? LanguageCode()
         {

@@ -35,10 +35,6 @@ namespace upnp.Services
         // If the service has no evented variables, it should not have eventing (cf. section on Eventing);
         // if the service does not have eventing, this element must be present but should be empty, i.e., <eventSubURL></eventSubURL>.
         // Specified by UPnP vendor. Single URL.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         public string? EventSubURL { get; private set; }
 
         public Url? AbsoluteServiceControlUrl
@@ -55,10 +51,6 @@ namespace upnp.Services
         readonly Url? _controlUrl;
 
         // REQUIRED. Service identifier. MUST be unique within this device description. Single URI.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         public string? ServiceId { get; private set; }
 
         // Required. UPnP service type. MUST NOT contain a hash character (#, 23 Hex in UTF-8). Single URI.

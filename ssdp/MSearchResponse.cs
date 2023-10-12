@@ -64,7 +64,7 @@ namespace Ssdp
                             line.StartsWith("CACHE-CONTROL:", StringComparison.OrdinalIgnoreCase)
                         )
                         {
-                            var maxAge = line.Substring(14).Trim();
+                            var maxAge = line[14..].Trim();
                             var seconds = maxAge.Split('=').ElementAt(1).Trim();
                             if (!Int32.TryParse(seconds, out secondsToCache))
                             {
@@ -74,19 +74,19 @@ namespace Ssdp
                         }
                         else if (line.StartsWith("LOCATION:", StringComparison.OrdinalIgnoreCase))
                         {
-                            Location = line.Substring(9).Trim();
+                            Location = line[9..].Trim();
                         }
                         else if (line.StartsWith("SERVER:", StringComparison.OrdinalIgnoreCase))
                         {
-                            Server = line.Substring(7).Trim();
+                            Server = line[7..].Trim();
                         }
                         else if (line.StartsWith("ST:", StringComparison.OrdinalIgnoreCase))
                         {
-                            SearchTarget = line.Substring(3).Trim();
+                            SearchTarget = line[3..].Trim();
                         }
                         else if (line.StartsWith("USN:", StringComparison.OrdinalIgnoreCase))
                         {
-                            Usn = line.Substring(4).Trim();
+                            Usn = line[4..].Trim();
                             Id = Usn.Split(':').ElementAt(1);
                         }
                     }
@@ -98,7 +98,7 @@ namespace Ssdp
             }
         }
 
-        int secondsToCache = -1;
+        readonly int secondsToCache = -1;
         readonly bool validResponseLine;
     }
 }

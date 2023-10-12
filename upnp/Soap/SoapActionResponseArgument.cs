@@ -14,8 +14,7 @@ namespace upnp.Soap
 
         public UInt32 ParseUi4()
         {
-            UInt32 result;
-            if (UInt32.TryParse(Value, out result))
+            if (UInt32.TryParse(Value, out uint result))
             {
                 return result;
             }

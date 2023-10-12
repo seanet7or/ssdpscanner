@@ -10,16 +10,8 @@ namespace upnp.Services
 {
     class UpnpServiceAction
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal string? Name { get; private set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal ArgumentList? ArgumentList { get; private set; }
 
         public UpnpServiceAction(XmlReader reader)
