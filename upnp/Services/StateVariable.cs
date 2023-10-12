@@ -14,16 +14,10 @@ namespace upnp.Services
 
         //string _dataType;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        string? defaultValue;
+#pragma warning disable IDE0052 // Remove unread private members
+        readonly string? defaultValue;
+#pragma warning restore IDE0052 // Remove unread private members
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal IEnumerable<string>? AllowedValueList
         {
             get { return _allowedValueList; }
@@ -31,10 +25,6 @@ namespace upnp.Services
 
         List<string>? _allowedValueList;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal AllowedValueRange? AllowedValueRange { get; private set; }
 
         void ReadAllowedValueList(XmlReader reader)

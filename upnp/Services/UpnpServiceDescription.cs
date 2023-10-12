@@ -13,16 +13,8 @@ namespace upnp.Services
     {
         // REQUIRED. In service templates, defines the lowest version of the architecture on which the service can be implemented.
         // In actual UPnP services, defines the architecture on which the service is implemented.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal SpecVersion? SpecVersion { get; private set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal ActionList? ActionList { get; private set; }
 
         internal Url? AbsoluteServiceControlUrl
@@ -35,10 +27,6 @@ namespace upnp.Services
             get { return deviceService?.ServiceTypeUri; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1811:AvoidUncalledPrivateCode"
-        )]
         internal ServiceStateTable? ServiceStateTable { get; private set; }
 
         readonly IUpnpDeviceService deviceService;

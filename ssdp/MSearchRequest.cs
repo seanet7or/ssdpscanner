@@ -4,7 +4,7 @@ namespace Ssdp
 {
     public class MSearchRequest
     {
-        string header;
+        readonly string header;
 
         internal MSearchRequest(string searchTarget, int maxWaitTimeInSecs)
         {

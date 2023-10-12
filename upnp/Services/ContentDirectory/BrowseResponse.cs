@@ -7,7 +7,7 @@
             _result = res;
         }
 
-        ArgTypeResult _result;
+        readonly ArgTypeResult _result;
 
         // This variable is used in conjunction with those actions that include a Result parameter.
         // The structure of the result is a DIDL-Lite XML fragment:

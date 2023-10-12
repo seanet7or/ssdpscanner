@@ -63,10 +63,13 @@ namespace upnp.Soap
 #if DEBUG
             //Debug.WriteLine(data);
 #endif
-            CancellationTokenSource cancelOnTimeout = new CancellationTokenSource();
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Content-Type", "text/xml; charset=utf-8");
-            headers.Add("SOAPACTION", "\"" + serviceTypeUri + "#" + actionName + "\"");
+            CancellationTokenSource cancelOnTimeout = new();
+            Dictionary<string, string> headers =
+                new()
+                {
+                    { "Content-Type", "text/xml; charset=utf-8" },
+                    { "SOAPACTION", "\"" + serviceTypeUri + "#" + actionName + "\"" }
+                };
 
             var response = await httpClient.PostDataAsync(
                 headers,

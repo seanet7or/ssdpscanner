@@ -40,6 +40,6 @@ namespace upnp.Services
             this._serviceTypeUri = serviceTypeUri;
         }
 
-        string _serviceTypeUri;
+        readonly string _serviceTypeUri;
     }
 }

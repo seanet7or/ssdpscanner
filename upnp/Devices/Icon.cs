@@ -51,8 +51,7 @@ namespace upnp.Devices
 
         public override bool Equals(object? obj)
         {
-            var other = obj as Icon;
-            if (other != null)
+            if (obj is Icon other)
             {
                 return this == other;
             }
@@ -71,12 +70,10 @@ namespace upnp.Devices
 
         readonly Url? _relativeUrl;
 
+#pragma warning disable IDE0052 // Remove unread private members
         // Required. Number of color bits per pixel. Integer.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        int depth;
+        readonly int depth;
+#pragma warning restore IDE0052 // Remove unread private members
 
         // Required. Horizontal dimension of icon in pixels. Integer.
         public int Width { get; private set; }
@@ -86,10 +83,6 @@ namespace upnp.Devices
 
         // Required. Icon's MIME type (cf. RFC 2045, 2046, and 2387). Single MIME image type.
         // At least one icon should be of type “image/png” (Portable Network Graphics, see IETF RFC 2083).
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
         internal string? mimetype;
 
         readonly UpnpDevice device;

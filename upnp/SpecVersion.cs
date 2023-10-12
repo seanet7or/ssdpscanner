@@ -5,17 +5,10 @@ namespace Upnp
 {
     class SpecVersion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        string? major;
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1823:AvoidUnusedPrivateFields"
-        )]
-        string? minor;
+#pragma warning disable IDE0052 // Remove unread private members
+        readonly string? major;
+        readonly string? minor;
+#pragma warning restore IDE0052 // Remove unread private members
 
         internal SpecVersion(XmlReader reader)
         {

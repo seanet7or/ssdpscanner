@@ -8,9 +8,7 @@ namespace Ssdp
 
         internal const int SsdpPort = 1900;
 
-        internal static IPEndPoint SsdpMulticastEndpoint = new IPEndPoint(
-            IPAddress.Parse(MulticastIpv4Address),
-            SsdpPort
-        );
+        internal static IPEndPoint SsdpMulticastEndpoint =
+            new(IPAddress.Parse(MulticastIpv4Address), SsdpPort);
     }
 }

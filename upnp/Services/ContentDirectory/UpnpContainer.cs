@@ -16,7 +16,7 @@ namespace upnp.Services.ContentDirectory
             get { return _searchClasses; }
         }
 
-        readonly List<string> _searchClasses = new List<string>();
+        readonly List<string> _searchClasses = new();
 
         // Child count for the object. Applies to containers only.
         public int ChildCount { get; private set; }

@@ -60,19 +60,21 @@ namespace upnp.Services.ContentDirectory
             ArgTypeSortCriteria sortCriteria
         )
         {
-            var inArgs = new Dictionary<string, string>();
-            inArgs.Add("ObjectID", objectId.ToString());
-            inArgs.Add("BrowseFlag", browse.ToString());
-            inArgs.Add("Filter", filter.ToString());
-            inArgs.Add("StartingIndex", startingIndex.ToString());
-            inArgs.Add("RequestedCount", requestedCount.ToString());
-            inArgs.Add("SortCriteria", sortCriteria.ToString());
+            var inArgs = new Dictionary<string, string>
+            {
+                { "ObjectID", objectId.ToString() },
+                { "BrowseFlag", browse.ToString() },
+                { "Filter", filter.ToString() },
+                { "StartingIndex", startingIndex.ToString() },
+                { "RequestedCount", requestedCount.ToString() },
+                { "SortCriteria", sortCriteria.ToString() }
+            };
 
             var soapResponse = await soapService.CallActionAsync("Browse", inArgs);
 
             if (soapResponse != null)
             {
-                if (soapResponse.Count() >= 4)
+                if (soapResponse.Count >= 4)
                 {
                     var resultXml = soapResponse.First(sr => sr.Name == "Result")?.Value;
                     var updateIdVal = soapResponse.First(sr => sr.Name == "UpdateID").Value;

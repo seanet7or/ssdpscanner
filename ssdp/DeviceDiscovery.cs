@@ -35,12 +35,11 @@ namespace Ssdp
         const int RequestsToSend = 8;
         const int SearchRequestsInterval = 20;
 
-        List<SsdpClient>? clients = new List<SsdpClient>();
+        List<SsdpClient>? clients = new();
 
         public EventHandler<DeviceDiscoveredEventArgs>? DeviceDiscovered { get; set; }
 
-        readonly ConcurrentDictionary<string, MSearchResponse> searchResponses =
-            new ConcurrentDictionary<string, MSearchResponse>();
+        readonly ConcurrentDictionary<string, MSearchResponse> searchResponses = new();
         bool disposed;
 
         public DeviceDiscovery(IEnumerable<IPAddress> ipAddressesToSendDiscoveryRequest)

@@ -7,7 +7,7 @@ namespace upnp.Devices
 {
     class UpnpDevice : IUpnpDevice
     {
-        readonly object iconListLock = new object();
+        readonly object iconListLock = new();
 
         public Icon? FindIcon(int requestedWidth)
         {
@@ -91,7 +91,7 @@ namespace upnp.Devices
             get { return _services; }
         }
 
-        readonly List<UpnpService> _services = new List<UpnpService>();
+        readonly List<UpnpService> _services = new();
 
         internal void AddService(UpnpService service)
         {

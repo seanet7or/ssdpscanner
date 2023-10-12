@@ -94,7 +94,7 @@ namespace upnp
                 if (urlWoQuery.Contains(":"))
                 {
                     Scheme = url.Split(':')[0];
-                    urlWoScheme = url.Substring(Scheme.Length + 1);
+                    urlWoScheme = url[(Scheme.Length + 1)..];
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace upnp
                 string pathQueryFragment;
                 if (urlWoScheme.StartsWith("//", StringComparison.Ordinal))
                 {
-                    urlWoScheme = urlWoScheme.Substring(2);
+                    urlWoScheme = urlWoScheme[2..];
                     if (urlWoScheme.Contains("/"))
                     {
                         Authority = urlWoScheme.Split('/')[0];
@@ -153,7 +153,7 @@ namespace upnp
         {
             if (relativeReference != null)
             {
-                Url target = new Url();
+                Url target = new();
 
                 if (relativeReference.HasScheme)
                 {
@@ -247,7 +247,7 @@ namespace upnp
             int lastSep = path.LastIndexOf('/');
             if (lastSep >= 0)
             {
-                res = path.Substring(0, lastSep);
+                res = path[..lastSep];
             }
             else
             {
@@ -268,15 +268,15 @@ namespace upnp
                 {
                     if (input.StartsWith("../", StringComparison.Ordinal))
                     {
-                        input = input.Substring(3);
+                        input = input[3..];
                     }
                     else if (input.StartsWith("./", StringComparison.Ordinal))
                     {
-                        input = input.Substring(2);
+                        input = input[2..];
                     }
                     else if (input.StartsWith("/./", StringComparison.Ordinal))
                     {
-                        input = "/" + input.Substring(3);
+                        input = "/" + input[3..];
                     }
                     else if (input.Equals("/."))
                     {
@@ -284,7 +284,7 @@ namespace upnp
                     }
                     else if (input.StartsWith("/../", StringComparison.Ordinal))
                     {
-                        input = "/" + input.Substring(4);
+                        input = "/" + input[4..];
                         output = RemoveLastSegment(output);
                     }
                     else if (input.Equals("/.."))
@@ -305,8 +305,8 @@ namespace upnp
                         int segSep = input.IndexOf('/', 1);
                         if (segSep >= 0)
                         {
-                            output = output + input.Substring(0, segSep);
-                            input = input.Substring(segSep);
+                            output = output + input[..segSep];
+                            input = input[segSep..];
                         }
                         else
                         {
