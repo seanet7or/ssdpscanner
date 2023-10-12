@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-
+    name: Build
     runs-on: windows-latest
 
     steps:
@@ -32,6 +32,11 @@ jobs:
         
     - name: Restore dependencies
       run: dotnet restore
+
+    - name: CSharpier
+      run: |
+          dotnet tool restore
+          dotnet csharpier --check .
       
     - name: Build
       run: dotnet build --no-restore
