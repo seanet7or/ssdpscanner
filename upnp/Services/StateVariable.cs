@@ -10,7 +10,7 @@ namespace upnp.Services
 {
     public class StateVariable
     {
-        internal string Name { get; private set; }
+        internal string? Name { get; private set; }
 
         //string _dataType;
 
@@ -18,24 +18,24 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        string defaultValue;
+        string? defaultValue;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        internal IEnumerable<string> AllowedValueList
+        internal IEnumerable<string>? AllowedValueList
         {
             get { return _allowedValueList; }
         }
 
-        List<string> _allowedValueList;
+        List<string>? _allowedValueList;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        internal AllowedValueRange AllowedValueRange { get; private set; }
+        internal AllowedValueRange? AllowedValueRange { get; private set; }
 
         void ReadAllowedValueList(XmlReader reader)
         {

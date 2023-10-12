@@ -17,7 +17,7 @@
         // This action allows the caller to incrementally browse the native hierarchy of the Content Directory objects
         // exposed by the Content Directory Service, including information listing the classes of objects available in
         // any particular object container.
-        Task<BrowseResponse> BrowseAsync(
+        Task<BrowseResponse?> BrowseAsync(
             ArgTypeObjectId objectId,
             ArgTypeBrowse browse,
             ArgTypeFilter filter,

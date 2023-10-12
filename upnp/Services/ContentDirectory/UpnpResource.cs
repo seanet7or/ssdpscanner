@@ -30,7 +30,7 @@ namespace upnp.Services.ContentDirectory
             return false;
         }
 
-        public int CompareTo(UpnpResource other)
+        public int CompareTo(UpnpResource? other)
         {
             if (other != null)
             {
@@ -48,7 +48,7 @@ namespace upnp.Services.ContentDirectory
 
         #endregion
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var other = obj as UpnpResource;
             if (other != null)
@@ -98,7 +98,7 @@ namespace upnp.Services.ContentDirectory
         // F+ : any number of digits (including no digits) to indicate fractions of seconds,
         // F0/F1 : a fraction, with F0 and F1 at least one digit long, and F0 < F1.
         // The string may be preceded by an optional + or – sign, and the decimal point itself may be omitted if there are no fractional second digits.
-        public string Duration { get; private set; }
+        public string? Duration { get; private set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -140,7 +140,7 @@ namespace upnp.Services.ContentDirectory
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        public UpnpProtocolInfo ProtocolInfo { get; private set; }
+        public UpnpProtocolInfo? ProtocolInfo { get; private set; }
 
         public UpnpResource(XmlReader reader)
         {

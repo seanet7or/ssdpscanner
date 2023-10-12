@@ -2,12 +2,12 @@
 {
     public interface IUpnpDeviceService
     {
-        string ServiceTypeUri { get; }
+        string? ServiceTypeUri { get; }
 
-        IUpnpServiceType ServiceType { get; }
+        IUpnpServiceType? ServiceType { get; }
 
-        Url AbsoluteServiceDescriptionUrl { get; }
+        Url? AbsoluteServiceDescriptionUrl { get; }
 
-        Url AbsoluteServiceControlUrl { get; }
+        Url? AbsoluteServiceControlUrl { get; }
     }
 }

@@ -35,16 +35,15 @@ namespace upnp.Services.ContentDirectory
             if (reader != null)
             {
                 ReadObjectAttributes(reader);
-                if (!string.IsNullOrEmpty(reader.GetAttribute("childCount")))
+                var childCountAttr = reader.GetAttribute("childCount");
+                if (!string.IsNullOrEmpty(childCountAttr))
                 {
-                    ChildCount = int.Parse(
-                        reader.GetAttribute("childCount"),
-                        CultureInfo.InvariantCulture
-                    );
+                    ChildCount = int.Parse(childCountAttr, CultureInfo.InvariantCulture);
                 }
-                if (!string.IsNullOrEmpty(reader.GetAttribute("searchable")))
+                var searchableAttr = reader.GetAttribute("searchable");
+                if (!string.IsNullOrEmpty(searchableAttr))
                 {
-                    _searchable = InnerTextToBoolean(reader.GetAttribute("searchable"));
+                    _searchable = InnerTextToBoolean(searchableAttr);
                 }
 
                 while (reader.Read())

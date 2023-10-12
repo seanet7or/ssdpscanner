@@ -13,19 +13,19 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        string minimum;
+        string? minimum;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        string maximum;
+        string? maximum;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        string step;
+        string? step;
 
         public AllowedValueRange(XmlReader reader)
         {

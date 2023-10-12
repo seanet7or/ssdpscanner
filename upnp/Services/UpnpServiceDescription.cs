@@ -17,29 +17,29 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        internal SpecVersion SpecVersion { get; private set; }
+        internal SpecVersion? SpecVersion { get; private set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        internal ActionList ActionList { get; private set; }
+        internal ActionList? ActionList { get; private set; }
 
-        internal Url AbsoluteServiceControlUrl
+        internal Url? AbsoluteServiceControlUrl
         {
-            get { return deviceService.AbsoluteServiceControlUrl; }
+            get { return deviceService?.AbsoluteServiceControlUrl; }
         }
 
-        internal string ServiceTypeUri
+        internal string? ServiceTypeUri
         {
-            get { return deviceService.ServiceTypeUri; }
+            get { return deviceService?.ServiceTypeUri; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        internal ServiceStateTable ServiceStateTable { get; private set; }
+        internal ServiceStateTable? ServiceStateTable { get; private set; }
 
         readonly IUpnpDeviceService deviceService;
 
@@ -55,6 +55,11 @@ namespace upnp.Services
         {
             try
             {
+                if (deviceService.AbsoluteServiceDescriptionUrl == null)
+                {
+                    Log.LogWarning("Can not read service description: URL is null");
+                    return false;
+                }
                 var xmlStream = await httpClient.GetAsync(
                     null,
                     deviceService.AbsoluteServiceDescriptionUrl.ToString()
@@ -120,6 +125,7 @@ namespace upnp.Services
             catch (Exception e)
             {
                 Log.LogWarning("Errror reading UPNP service description: " + e.Message);
+                return false;
             }
             return true;
         }

@@ -51,7 +51,7 @@ namespace upnp.Services.ContentDirectory
             return 0;
         }
 
-        public async Task<BrowseResponse> BrowseAsync(
+        public async Task<BrowseResponse?> BrowseAsync(
             ArgTypeObjectId objectId,
             ArgTypeBrowse browse,
             ArgTypeFilter filter,
@@ -74,21 +74,27 @@ namespace upnp.Services.ContentDirectory
             {
                 if (soapResponse.Count() >= 4)
                 {
-                    var response = new BrowseResponse(
-                        new ArgTypeResult(soapResponse.First(sr => sr.Name == "Result").Value)
+                    var resultXml = soapResponse.First(sr => sr.Name == "Result")?.Value;
+                    var updateIdVal = soapResponse.First(sr => sr.Name == "UpdateID").Value;
+                    var totalMatchesVal = soapResponse.First(sr => sr.Name == "TotalMatches").Value;
+                    var numberReturnedVal = soapResponse
+                        .First(sr => sr.Name == "NumberReturned")
+                        .Value;
+                    if (
+                        resultXml != null
+                        && updateIdVal != null
+                        && totalMatchesVal != null
+                        && numberReturnedVal != null
                     )
                     {
-                        UpdateId = ArgTypeUpdateId.FromString(
-                            soapResponse.First(sr => sr.Name == "UpdateID").Value
-                        ),
-                        TotalMatches = ArgTypeCount.FromString(
-                            soapResponse.First(sr => sr.Name == "TotalMatches").Value
-                        ),
-                        NumberReturned = ArgTypeCount.FromString(
-                            soapResponse.First(sr => sr.Name == "NumberReturned").Value
-                        )
-                    };
-                    return response;
+                        var response = new BrowseResponse(new ArgTypeResult(resultXml))
+                        {
+                            UpdateId = ArgTypeUpdateId.FromString(updateIdVal),
+                            TotalMatches = ArgTypeCount.FromString(totalMatchesVal),
+                            NumberReturned = ArgTypeCount.FromString(numberReturnedVal)
+                        };
+                        return response;
+                    }
                 }
             }
 
@@ -103,7 +109,11 @@ namespace upnp.Services.ContentDirectory
 
         public UpnpContentDirectory(UpnpServiceDescription serviceDesc, IHttpClient httpClient)
         {
-            if (serviceDesc != null)
+            if (
+                serviceDesc != null
+                && serviceDesc.AbsoluteServiceControlUrl != null
+                && serviceDesc.ServiceTypeUri != null
+            )
             {
                 //this.serviceDesc = serviceDesc;
                 soapService = new SoapService(

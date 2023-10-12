@@ -25,16 +25,16 @@
         // If the control point has an UpdateID for the container that is not equal to the UpdateID last returned, then the
         // control point should refresh all its state relative to that container. If the ObjectID is zero, then the UpdateID
         // returned is SystemUpdateID (see sec. 2.5.20).
-        public ArgTypeUpdateId UpdateId { get; set; }
+        public ArgTypeUpdateId? UpdateId { get; set; }
 
         // If BrowseMetadata is specified in the BrowseFlags then TotalMatches = 1, else if BrowseDirectChildren
         // is specified in the BrowseFlags then TotalMatches = total number of objects in the container specified
         // for the Browse() action (independent of the starting index specified by the StartingIndex argument).
         // If the CDS cannot compute TotalMatches and NumberReturned is not equal to zero, then TotalMatches = 0.
         // If the CDS cannot compute TotalMatches and NumberReturned is equal to zero, then the CDS should return an error code 720.
-        public ArgTypeCount TotalMatches { get; set; }
+        public ArgTypeCount? TotalMatches { get; set; }
 
         // Number of objects returned in this result. If BrowseMetadata is specified in the BrowseFlags, then NumberReturned = 1
-        public ArgTypeCount NumberReturned { get; set; }
+        public ArgTypeCount? NumberReturned { get; set; }
     }
 }
