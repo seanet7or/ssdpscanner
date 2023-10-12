@@ -15,13 +15,13 @@ namespace upnp.Devices
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        internal SpecVersion SpecVersion { get; private set; }
+        internal SpecVersion? SpecVersion { get; private set; }
 
-        public IUpnpDevice Device
+        public IUpnpDevice? Device
         {
             get { return _device; }
         }
-        UpnpDevice _device;
+        UpnpDevice? _device;
 
         public UpnpDeviceDescription(MSearchResponse searchResponse, IHttpClient httpClient)
         {
@@ -31,7 +31,7 @@ namespace upnp.Devices
 
         IHttpClient httpClient;
 
-        static string LanguageCode()
+        static string? LanguageCode()
         {
             /*var locale = Java.Util.Locale.Default;
             if (locale != null)
@@ -54,6 +54,11 @@ namespace upnp.Devices
         {
             try
             {
+                if (searchResponse.Location == null)
+                {
+                    Log.LogWarning("Can not read UPNP device description: Location is null");
+                    return false;
+                }
                 var langCode = LanguageCode();
                 var xmlStream = await httpClient.GetAsync(langCode, searchResponse.Location);
                 var xmlReader = XmlReader.Create(xmlStream);
@@ -87,7 +92,7 @@ namespace upnp.Devices
 
         async Task ReadServiceDescsAsync()
         {
-            if (_device.DeviceServiceList != null)
+            if (_device?.DeviceServiceList != null)
             {
                 foreach (var service in _device.DeviceServiceList)
                 {
@@ -95,7 +100,7 @@ namespace upnp.Devices
                     if (await serviceDescription.ReadDescriptionAsync())
                     {
                         if (
-                            service.ServiceType.StandardServiceType
+                            service.ServiceType?.StandardServiceType
                             == StandardServiceType.ContentDirectory
                         )
                         {
@@ -113,7 +118,7 @@ namespace upnp.Devices
 
         void ParseRootNode(XmlReader reader)
         {
-            string urlBase = null;
+            string? urlBase = null;
             while (reader.Read())
             {
                 if (reader.IsStartElement())
@@ -146,7 +151,10 @@ namespace upnp.Devices
             {
                 urlBase = searchResponse.Location;
             }
-            _device.BaseUrl = new Url(urlBase);
+            if (_device != null && !string.IsNullOrEmpty(urlBase))
+            {
+                _device.BaseUrl = new Url(urlBase);
+            }
         }
         /*
         void ParseRootNode(XmlNode root)

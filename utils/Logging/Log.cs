@@ -33,9 +33,9 @@ namespace utils.Logging
 
         #endregion
 
-        Stream logFileStream;
+        Stream? logFileStream;
 
-        static Log instance;
+        static Log? instance;
 
         public static void Init(string loggingDirectory, IFileAccess fileAccess)
         {
@@ -55,7 +55,7 @@ namespace utils.Logging
 
             Debug.WriteLine(formatted);
             var data = Encoding.UTF8.GetBytes(formatted);
-            instance.logFileStream.WriteAsync(data, 0, data.Length);
+            instance?.logFileStream?.WriteAsync(data, 0, data.Length);
         }
 
         public static void LogWarning(string message, params string[] args)

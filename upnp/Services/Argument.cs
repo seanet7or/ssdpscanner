@@ -13,7 +13,7 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        readonly string name;
+        readonly string? name;
 
         // REQUIRED. Defines whether argument is an input or output parameter. MUST be either “in” or “out” and not both.
         // All input arguments MUST be listed before any output arguments.
@@ -21,7 +21,7 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        readonly string direction;
+        readonly string? direction;
 
         // OPTIONAL. Identifies at most one output argument as the return value. If included, MUST be included as a
         // subelement of the first output argument. (Element only; no value.)
@@ -37,7 +37,7 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        readonly string relatedStateVariable;
+        readonly string? relatedStateVariable;
 
         public Argument(XmlReader reader)
         {

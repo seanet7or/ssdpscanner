@@ -9,13 +9,13 @@ namespace Upnp
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        string major;
+        string? major;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        string minor;
+        string? minor;
 
         internal SpecVersion(XmlReader reader)
         {

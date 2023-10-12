@@ -11,19 +11,24 @@ namespace upnp.Services
 {
     class UpnpDeviceService : IUpnpDeviceService
     {
-        public string ServiceTypeUri
+        public string? ServiceTypeUri
         {
-            get { return ServiceType.ServiceTypeUri; }
+            get { return ServiceType?.ServiceTypeUri; }
         }
 
-        public Url AbsoluteServiceDescriptionUrl
+        public Url? AbsoluteServiceDescriptionUrl
         {
-            get { return device.BaseUrl.ResolveRelativeToThisBaseUrl(_scpdUrl); }
+            get
+            {
+                return _scpdUrl != null
+                    ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_scpdUrl)
+                    : null;
+            }
         }
 
         // Required. URL for service description (nee Service Control Protocol Definition URL).
         // (cf. section below on service description.) May be relative to base URL. Specified by UPnP vendor. Single URL.
-        readonly Url _scpdUrl;
+        readonly Url? _scpdUrl;
 
         // Required. URL for eventing (cf. section on Eventing). May be relative to base URL.
         // Must be unique within the device; no two services may have the same URL for eventing.
@@ -34,25 +39,30 @@ namespace upnp.Services
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        public string EventSubURL { get; private set; }
+        public string? EventSubURL { get; private set; }
 
-        public Url AbsoluteServiceControlUrl
+        public Url? AbsoluteServiceControlUrl
         {
-            get { return device.BaseUrl.ResolveRelativeToThisBaseUrl(_controlUrl); }
+            get
+            {
+                return (_controlUrl != null)
+                    ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_controlUrl)
+                    : null;
+            }
         }
 
         // Required. URL for control (cf. section on Control). May be relative to base URL. Specified by UPnP vendor. Single URL.
-        readonly Url _controlUrl;
+        readonly Url? _controlUrl;
 
         // REQUIRED. Service identifier. MUST be unique within this device description. Single URI.
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode"
         )]
-        public string ServiceId { get; private set; }
+        public string? ServiceId { get; private set; }
 
         // Required. UPnP service type. MUST NOT contain a hash character (#, 23 Hex in UTF-8). Single URI.
-        public IUpnpServiceType ServiceType { get; private set; }
+        public IUpnpServiceType? ServiceType { get; private set; }
 
         readonly UpnpDevice device;
 

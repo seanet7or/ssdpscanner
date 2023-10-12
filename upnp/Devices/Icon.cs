@@ -10,7 +10,7 @@ namespace upnp.Devices
 
         public override int GetHashCode()
         {
-            return _relativeUrl.GetHashCode();
+            return _relativeUrl != null ? _relativeUrl.GetHashCode() : 0;
         }
 
         public static bool operator <(Icon left, Icon right)
@@ -31,7 +31,7 @@ namespace upnp.Devices
             return false;
         }
 
-        public int CompareTo(Icon other)
+        public int CompareTo(Icon? other)
         {
             if (other != null)
             {
@@ -49,7 +49,7 @@ namespace upnp.Devices
 
         #endregion
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var other = obj as Icon;
             if (other != null)
@@ -59,12 +59,17 @@ namespace upnp.Devices
             return false;
         }
 
-        public Url AbsoluteUrl
+        public Url? AbsoluteUrl
         {
-            get { return device.BaseUrl.ResolveRelativeToThisBaseUrl(_relativeUrl); }
+            get
+            {
+                return _relativeUrl != null
+                    ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_relativeUrl)
+                    : null;
+            }
         }
 
-        readonly Url _relativeUrl;
+        readonly Url? _relativeUrl;
 
         // Required. Number of color bits per pixel. Integer.
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -85,7 +90,7 @@ namespace upnp.Devices
             "Microsoft.Performance",
             "CA1823:AvoidUnusedPrivateFields"
         )]
-        internal string mimetype;
+        internal string? mimetype;
 
         readonly UpnpDevice device;
 

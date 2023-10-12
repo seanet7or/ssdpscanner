@@ -9,11 +9,11 @@ namespace upnp.Devices
     {
         readonly object iconListLock = new object();
 
-        public Icon FindIcon(int requestedWidth)
+        public Icon? FindIcon(int requestedWidth)
         {
             lock (iconListLock)
             {
-                IconList.Sort();
+                IconList?.Sort();
                 if (IconList != null)
                 {
                     foreach (var icon in IconList)
@@ -24,16 +24,16 @@ namespace upnp.Devices
                         }
                     }
                 }
-                return IconList.Last();
+                return IconList?.Last();
             }
         }
 
-        public IContentDirectory ContentDirectory
+        public IContentDirectory? ContentDirectory
         {
-            get { return _services.OfType<IContentDirectory>().FirstOrDefault(); }
+            get { return _services?.OfType<IContentDirectory>().FirstOrDefault(); }
         }
 
-        public string GetModelDescription()
+        public string? GetModelDescription()
         {
             if (!string.IsNullOrEmpty(modelDescription))
             {
@@ -44,47 +44,47 @@ namespace upnp.Devices
 
         // Recommended. Long description for end user. Should be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // Specified by UPnP vendor. String. Should be < 128 characters.
-        readonly string modelDescription;
+        readonly string? modelDescription;
 
         // Required. Model name. May be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // Specified by UPnP vendor. String. Should be < 32 characters.
-        readonly string modelName;
+        readonly string? modelName;
 
         // Recommended. Serial number. May be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // Specified by UPnP vendor. String. Should be < 64 characters.
-        public string SerialNumber { get; private set; }
+        public string? SerialNumber { get; private set; }
 
         // REQUIRED. UPnP device type. Single URI.
-        public IUpnpDeviceType DeviceType { get; private set; }
+        public IUpnpDeviceType? DeviceType { get; private set; }
 
         // Required. Short description for end user. Should be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // Specified by UPnP vendor. String. Should be < 64 characters.
-        public string FriendlyName { get; private set; }
+        public string? FriendlyName { get; private set; }
 
         // Required. Manufacturer's name. May be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // Specified by UPnP vendor. String. Should be < 64 characters.
-        public string Manufacturer { get; private set; }
+        public string? Manufacturer { get; private set; }
 
         public Guid Id { get; private set; }
 
         // Optional. Web site for Manufacturer. May be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // May be relative to base URL. Specified by UPnP vendor. Single URL.
-        public string ManufacturerUrl { get; private set; }
+        public string? ManufacturerUrl { get; private set; }
 
         // Recommended. Model number. May be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // Specified by UPnP vendor. String. Should be < 32 characters.
-        public string ModelNumber { get; private set; }
+        public string? ModelNumber { get; private set; }
 
         // Optional. Web site for model. May be localized (cf. ACCEPT-LANGUAGE and CONTENT-LANGUAGE headers).
         // May be relative to base URL. Specified by UPnP vendor. Single URL.
-        public string ModelUrl { get; private set; }
+        public string? ModelUrl { get; private set; }
 
         // Recommended. URL to presentation for device (cf. section on Presentation). May be relative to base URL.
         // Specified by UPnP vendor. Single URL.
-        public string PresentationUrl { get; private set; }
+        public string? PresentationUrl { get; private set; }
 
         // Required if and only if device has one or more icons. Specified by UPnP vendor.
-        public IconList IconList { get; private set; }
+        public IconList? IconList { get; private set; }
 
         public IEnumerable<UpnpService> Services
         {
@@ -99,9 +99,9 @@ namespace upnp.Devices
         }
 
         // Optional.
-        internal DeviceServiceList DeviceServiceList { get; private set; }
+        internal DeviceServiceList? DeviceServiceList { get; private set; }
 
-        public Url BaseUrl { get; internal set; }
+        public Url? BaseUrl { get; internal set; }
 
         internal UpnpDevice(XmlReader reader)
         {

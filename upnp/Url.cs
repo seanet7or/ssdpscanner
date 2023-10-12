@@ -45,9 +45,9 @@ namespace upnp
             get { return !string.IsNullOrEmpty(Scheme); }
         }
 
-        public string Scheme { get; set; }
+        public string? Scheme { get; set; }
 
-        public string Authority { get; set; }
+        public string? Authority { get; set; }
 
         bool HasAuthority
         {
@@ -59,16 +59,16 @@ namespace upnp
             get { return string.IsNullOrEmpty(Path); }
         }
 
-        string Path { get; set; }
+        string? Path { get; set; }
 
-        string Query { get; set; }
+        string? Query { get; set; }
 
         bool HasQuery
         {
             get { return !string.IsNullOrEmpty(Query); }
         }
 
-        string Fragment { get; set; }
+        string? Fragment { get; set; }
 
         bool HasFragment
         {
@@ -149,7 +149,7 @@ namespace upnp
         }
 
         // https://www.ietf.org/rfc/rfc3986.txt 5.2.2.
-        public Url ResolveRelativeToThisBaseUrl(Url relativeReference)
+        public Url? ResolveRelativeToThisBaseUrl(Url relativeReference)
         {
             if (relativeReference != null)
             {
@@ -190,7 +190,11 @@ namespace upnp
                             if (IsPathEmpty)
                             {
                                 if (
-                                    relativeReference.Path.StartsWith("/", StringComparison.Ordinal)
+                                    relativeReference.Path != null
+                                    && relativeReference.Path.StartsWith(
+                                        "/",
+                                        StringComparison.Ordinal
+                                    )
                                 )
                                 {
                                     mergedPath = relativeReference.Path;
@@ -203,15 +207,23 @@ namespace upnp
                             else
                             {
                                 if (
-                                    relativeReference.Path.StartsWith("/", StringComparison.Ordinal)
+                                    relativeReference.Path != null
+                                    && relativeReference.Path.StartsWith(
+                                        "/",
+                                        StringComparison.Ordinal
+                                    )
                                 )
                                 {
-                                    mergedPath = RemoveLastSegment(Path) + relativeReference.Path;
+                                    mergedPath =
+                                        (Path != null ? RemoveLastSegment(Path) : "")
+                                        + relativeReference.Path;
                                 }
                                 else
                                 {
                                     mergedPath =
-                                        RemoveLastSegment(Path) + "/" + relativeReference.Path;
+                                        (Path != null ? RemoveLastSegment(Path) : "")
+                                        + "/"
+                                        + relativeReference.Path;
                                 }
                             }
                             target.Path = RemoveDotSegments(mergedPath);

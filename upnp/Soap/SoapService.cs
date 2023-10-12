@@ -30,7 +30,7 @@ namespace upnp.Soap
 
         internal async Task<IReadOnlyList<ISoapActionResponseArgument>> CallActionAsync(
             string actionName,
-            Dictionary<string, string> inArguments
+            Dictionary<string, string>? inArguments
         )
         {
             string argsData = string.Empty;
