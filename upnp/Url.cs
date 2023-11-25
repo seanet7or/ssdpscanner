@@ -191,10 +191,9 @@ namespace upnp
                             {
                                 if (
                                     relativeReference.Path != null
-                                    && relativeReference.Path.StartsWith(
-                                        "/",
-                                        StringComparison.Ordinal
-                                    )
+                                    && relativeReference
+                                        .Path
+                                        .StartsWith("/", StringComparison.Ordinal)
                                 )
                                 {
                                     mergedPath = relativeReference.Path;
@@ -208,10 +207,9 @@ namespace upnp
                             {
                                 if (
                                     relativeReference.Path != null
-                                    && relativeReference.Path.StartsWith(
-                                        "/",
-                                        StringComparison.Ordinal
-                                    )
+                                    && relativeReference
+                                        .Path
+                                        .StartsWith("/", StringComparison.Ordinal)
                                 )
                                 {
                                     mergedPath =
