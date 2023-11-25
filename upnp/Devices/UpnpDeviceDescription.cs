@@ -1,8 +1,8 @@
 ﻿using System.Xml;
 using Ssdp;
+using Upnp;
 using upnp.Services;
 using upnp.Services.ContentDirectory;
-using Upnp;
 using utils.Logging;
 
 namespace upnp.Devices

@@ -7,57 +7,55 @@ namespace upnp.Services.ContentDirectory
     {
         public ArgTypeResult(string xml)
         {
-            using (var reader = XmlReader.Create(new StringReader(xml)))
+            using var reader = XmlReader.Create(new StringReader(xml));
+            while (reader.Read())
             {
-                while (reader.Read())
+                if (reader.IsStartElement())
                 {
-                    if (reader.IsStartElement())
+                    if (reader.Name == "xml")
                     {
-                        if (reader.Name == "xml")
+                        reader.Read();
+                    }
+                    else if (reader.Name == "DIDL-Lite")
+                    {
+                        while (reader.Read())
                         {
-                            reader.Read();
-                        }
-                        else if (reader.Name == "DIDL-Lite")
-                        {
-                            while (reader.Read())
+                            if (reader.IsStartElement())
                             {
-                                if (reader.IsStartElement())
+                                if (reader.Name == "container")
                                 {
-                                    if (reader.Name == "container")
-                                    {
-                                        Add(new UpnpContainer(reader));
-                                    }
-                                    else if (reader.Name == "item")
-                                    {
-                                        Add(new UpnpItem(reader));
-                                    }
-                                    else
-                                    {
-                                        Log.LogWarning(
-                                            "Unexpected node {0} in DIDL-Lite node",
-                                            reader.Name
-                                        );
-                                        reader.Read();
-                                        reader.ReadContentAsString();
-                                    }
+                                    Add(new UpnpContainer(reader));
+                                }
+                                else if (reader.Name == "item")
+                                {
+                                    Add(new UpnpItem(reader));
                                 }
                                 else
                                 {
-                                    break;
+                                    Log.LogWarning(
+                                        "Unexpected node {0} in DIDL-Lite node",
+                                        reader.Name
+                                    );
+                                    reader.Read();
+                                    reader.ReadContentAsString();
                                 }
                             }
-                        }
-                        else
-                        {
-                            Log.LogWarning("Unexpected node name in ArgTypeResult: " + reader.Name);
-                            reader.Read();
-                            reader.ReadContentAsString();
+                            else
+                            {
+                                break;
+                            }
                         }
                     }
                     else
                     {
-                        break;
+                        Log.LogWarning("Unexpected node name in ArgTypeResult: " + reader.Name);
+                        reader.Read();
+                        reader.ReadContentAsString();
                     }
+                }
+                else
+                {
+                    break;
                 }
             }
         }
