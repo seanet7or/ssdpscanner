@@ -20,3 +20,5 @@
 /utils/bin/Debug
 /utils/obj/Debug/net7.0
 /utils/obj
+/UpnpExplorer/bin
+/UpnpExplorer/obj
