@@ -92,19 +92,20 @@ public class MainPage : ContentPage
     void OnDeviceDiscovered(object sender, DeviceDiscoveredEventArgs e)
     {
         var location = e.SearchResponse.Location;
-        if (!devices.Any((d) => d.Location == location))
+
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            if (!devices.Any((d) => d.Location == location))
             {
                 logLb.Text += e.SearchResponse.Header;
                 devices.Add(
                     new Models.Device
                     {
-                        DisplayName = e.SearchResponse.Usn,
+                        DisplayName = (e.SearchResponse.Server ?? "") + e.SearchResponse.Usn,
                         Location = e.SearchResponse.Location
                     }
                 );
-            });
-        }
+            }
+        });
     }
 }
