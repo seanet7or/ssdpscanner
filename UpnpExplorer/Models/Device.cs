@@ -2,8 +2,8 @@
 {
     public class Device
     {
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
     }
 }

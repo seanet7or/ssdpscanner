@@ -4,7 +4,7 @@
     {
         public static ArgTypeFilter MatchAll()
         {
-            return new ArgTypeFilter { "*" };
+            return ["*"];
         }
 
         public override string ToString()
