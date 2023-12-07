@@ -7,9 +7,9 @@ using utils.Logging;
 
 namespace upnp.Devices
 {
-    public class UpnpDeviceDescription
+    public class UpnpDeviceDescription(MSearchResponse searchResponse, IHttpClient httpClient)
     {
-        readonly MSearchResponse searchResponse;
+        readonly MSearchResponse searchResponse = searchResponse;
 
         internal SpecVersion? SpecVersion { get; private set; }
 
@@ -18,14 +18,7 @@ namespace upnp.Devices
             get { return _device; }
         }
         UpnpDevice? _device;
-
-        public UpnpDeviceDescription(MSearchResponse searchResponse, IHttpClient httpClient)
-        {
-            this.searchResponse = searchResponse;
-            this.httpClient = httpClient;
-        }
-
-        readonly IHttpClient httpClient;
+        readonly IHttpClient httpClient = httpClient;
 
         static string? LanguageCode()
         {
