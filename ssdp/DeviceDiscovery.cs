@@ -1,6 +1,8 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
+using ssdp;
 
 namespace Ssdp
 {
@@ -101,22 +103,34 @@ namespace Ssdp
 
                     if (receiveString.StartsWith("HTTP/1.1 200 OK", StringComparison.Ordinal))
                     {
-                        var searchResponse = new MSearchResponse(receiveString);
-                        if (searchResponse.SearchTarget != null && remoteEndpoint != null)
+                        try
                         {
-                            if (searchResponses.TryAdd(searchResponse.SearchTarget, searchResponse))
+                            var searchResponse = new MSearchResponse(receiveString);
+                            if (searchResponse.SearchTarget != null && remoteEndpoint != null)
                             {
-                                if (DeviceDiscovered != null)
+                                if (
+                                    searchResponses.TryAdd(
+                                        searchResponse.SearchTarget,
+                                        searchResponse
+                                    )
+                                )
                                 {
-                                    DeviceDiscovered(
-                                        this,
-                                        new DeviceDiscoveredEventArgs(
-                                            searchResponse,
-                                            remoteEndpoint
-                                        )
-                                    );
+                                    if (DeviceDiscovered != null)
+                                    {
+                                        DeviceDiscovered(
+                                            this,
+                                            new DeviceDiscoveredEventArgs(
+                                                searchResponse,
+                                                remoteEndpoint
+                                            )
+                                        );
+                                    }
                                 }
                             }
+                        }
+                        catch (SsdpException ex)
+                        {
+                            Debug.WriteLine(ex.Message);
                         }
                     }
                     else

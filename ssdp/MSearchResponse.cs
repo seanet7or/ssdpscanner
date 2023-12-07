@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using ssdp;
 
 namespace Ssdp
 {
@@ -13,7 +14,8 @@ namespace Ssdp
         public string? SearchTarget { get; private set; }
 
         // Description, Single absolute URL, required
-        public string? Location { get; private set; }
+        // URL to the UPnP description of the root device
+        public string Location { get; private set; }
 
         // OS/version UPnP/2.0 product/version, required
         public string? Server { get; private set; }
@@ -22,7 +24,8 @@ namespace Ssdp
         // uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:ver
         // uuid:device-UUID::urn:domain-name:device:deviceType:ver
         // uuid:device-UUID::urn:domain-name:service:serviceType:ver
-        public string? Usn { get; private set; }
+        // Required. Field value contains Unique Service Name.
+        public string Usn { get; private set; }
 
         public string? Header { get; private set; }
 
@@ -89,12 +92,30 @@ namespace Ssdp
                             Usn = line[4..].Trim();
                             Id = Usn.Split(':').ElementAt(1);
                         }
+                        else if (line.StartsWith("EXT:", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // ignore: Required for backwards compatibility with UPnP 1.0. (Header field name only; no field value.)
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Unknown header line: " + line);
+                        }
                     }
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine("Error parsing search response: " + e);
                 }
+            }
+            if (Location == null)
+            {
+                throw new SsdpException(
+                    "Location is missing in search response: " + receivedHeader
+                );
+            }
+            if (Usn == null)
+            {
+                throw new SsdpException("USN is missing in search response: " + receivedHeader);
             }
         }
 
