@@ -91,7 +91,7 @@ namespace upnp.Devices
             get { return _services; }
         }
 
-        readonly List<UpnpService> _services = new();
+        readonly List<UpnpService> _services = [];
 
         internal void AddService(UpnpService service)
         {

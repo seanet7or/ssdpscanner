@@ -7,7 +7,7 @@ public class MainPage : ContentPage
 {
     private readonly Label logLb;
 
-    readonly ObservableCollection<Models.Device> devices = new();
+    readonly ObservableCollection<Models.Device> devices = [];
 
     public MainPage()
     {
@@ -89,7 +89,7 @@ public class MainPage : ContentPage
         await deviceDiscovery.SearchAsync(5);
     }
 
-    void OnDeviceDiscovered(object sender, DeviceDiscoveredEventArgs e)
+    void OnDeviceDiscovered(object? sender, DeviceDiscoveredEventArgs e)
     {
         var location = e.SearchResponse.Location;
 

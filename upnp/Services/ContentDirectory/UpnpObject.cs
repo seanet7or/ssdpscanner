@@ -57,14 +57,14 @@ namespace upnp.Services.ContentDirectory
             get { return _resourceFiles; }
         }
 
-        readonly List<UpnpResource> _resourceFiles = new();
+        readonly List<UpnpResource> _resourceFiles = [];
 
         public IList<string>? Rights
         {
             get { return _rights; }
         }
 
-        readonly List<string> _rights = new();
+        readonly List<string> _rights = [];
 
         // General-purpose tag where a user can annotate an object with some user-specific information
         public string? UserAnnotation { get; private set; }

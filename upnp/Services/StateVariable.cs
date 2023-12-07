@@ -24,7 +24,7 @@ namespace upnp.Services
 
         void ReadAllowedValueList(XmlReader reader)
         {
-            _allowedValueList = new List<string>();
+            _allowedValueList =  [];
             while (reader.Read())
             {
                 if (reader.IsStartElement())

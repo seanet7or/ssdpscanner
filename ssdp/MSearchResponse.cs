@@ -54,7 +54,7 @@ namespace Ssdp
                 {
                     foreach (
                         var line in receivedHeader.Split(
-                            new[] { "\r\n" },
+                            separator,
                             StringSplitOptions.RemoveEmptyEntries
                         )
                     )
@@ -121,5 +121,6 @@ namespace Ssdp
 
         readonly int secondsToCache = -1;
         readonly bool validResponseLine;
+        private static readonly string[] separator = ["\r\n"];
     }
 }

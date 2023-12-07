@@ -37,7 +37,7 @@ namespace Ssdp
         const int RequestsToSend = 8;
         const int SearchRequestsInterval = 20;
 
-        List<SsdpClient>? clients = new();
+        List<SsdpClient>? clients = [];
 
         public EventHandler<DeviceDiscoveredEventArgs>? DeviceDiscovered { get; set; }
 
@@ -46,10 +46,7 @@ namespace Ssdp
 
         public DeviceDiscovery(IEnumerable<IPAddress> ipAddressesToSendDiscoveryRequest)
         {
-            if (ipAddressesToSendDiscoveryRequest == null)
-            {
-                throw new ArgumentNullException("ipAddressesToSendDiscoveryRequest");
-            }
+            ArgumentNullException.ThrowIfNull(ipAddressesToSendDiscoveryRequest);
             foreach (var address in ipAddressesToSendDiscoveryRequest)
             {
                 clients.Add(new SsdpClient(address));
@@ -115,16 +112,13 @@ namespace Ssdp
                                     )
                                 )
                                 {
-                                    if (DeviceDiscovered != null)
-                                    {
-                                        DeviceDiscovered(
-                                            this,
-                                            new DeviceDiscoveredEventArgs(
-                                                searchResponse,
-                                                remoteEndpoint
-                                            )
-                                        );
-                                    }
+                                    DeviceDiscovered?.Invoke(
+                                        this,
+                                        new DeviceDiscoveredEventArgs(
+                                            searchResponse,
+                                            remoteEndpoint
+                                        )
+                                    );
                                 }
                             }
                         }

@@ -4,7 +4,7 @@
     {
         public static ArgTypeSortCriteria NoSort
         {
-            get { return new ArgTypeSortCriteria { }; }
+            get { return []; }
         }
 
         public override string ToString()
