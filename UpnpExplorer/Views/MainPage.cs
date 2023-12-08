@@ -5,26 +5,23 @@ namespace UpnpExplorer.Views;
 
 public class MainPage : ContentPage
 {
-    private readonly Label logLb;
-
     readonly ObservableCollection<Models.Device> devices = [];
+    private ListView deviceListView;
 
     public MainPage()
     {
-        logLb = new Label
+        ToolbarItem item = new ToolbarItem
         {
-            HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Center
+            Text = "Scan",
+            IconImageSource = ImageSource.FromFile("refresh_black_24dp.png"),
+            Command = new Command(async () => await Refresh())
         };
+        ToolbarItems.Add(item);
 
-        var scanBn = new Button { Text = "Scan" };
-        scanBn.Clicked += async (sender, e) => await Scan();
-
-        var deviceListView = new ListView
+        deviceListView = new ListView
         {
             VerticalScrollBarVisibility = ScrollBarVisibility.Always,
             IsPullToRefreshEnabled = true,
-            RowHeight = 100,
             ItemTemplate = new DataTemplate(() =>
             {
                 var nameLabel = new Label();
@@ -39,50 +36,43 @@ public class MainPage : ContentPage
                     {
                         new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
                         new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
                     },
-                    ColumnDefinitions = { new ColumnDefinition() }
+                    ColumnDefinitions = { new ColumnDefinition() },
+                    Padding = 10,
                 };
-
-                grid.Add(nameLabel, 0, 1);
-                grid.Add(locationLabel, 0, 2);
+                grid.Add(nameLabel, 0, 0);
+                grid.Add(locationLabel, 0, 1);
 
                 return new ViewCell { View = grid };
             }),
             ItemsSource = devices
         };
-        deviceListView.RefreshCommand = new Command(async () =>
+        deviceListView.RefreshCommand = new Command(async () => await Refresh());
+
+        Content = deviceListView;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            await Scan();
-            deviceListView.IsRefreshing = false;
+            deviceListView.IsRefreshing = true;
+            devices.Clear();
         });
-
-        var grid = new Grid
-        {
-            RowDefinitions =
-            {
-                new RowDefinition { Height = new GridLength(100) },
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-            },
-            ColumnDefinitions = { new ColumnDefinition() }
-        };
-
-        var logView = new ScrollView { Content = logLb };
-        grid.Add(scanBn, 0, 0);
-        grid.Add(deviceListView, 0, 1);
-        grid.Add(logView, 0, 2);
-
-        Content = grid;
+        await Scan();
+        MainThread.BeginInvokeOnMainThread(() => deviceListView.IsRefreshing = false);
     }
 
     private async Task Scan()
     {
         var networkInterfaces = new NetworkInterfaces();
         var addresses = networkInterfaces.GetConnectedIPAddresses();
-
-        logLb.Text += string.Join(", ", addresses.Select(a => a.ToString()));
 
         using var deviceDiscovery = new DeviceDiscovery(addresses);
         deviceDiscovery.DeviceDiscovered += OnDeviceDiscovered;
@@ -97,7 +87,6 @@ public class MainPage : ContentPage
         {
             if (!devices.Any((d) => d.Location == location))
             {
-                logLb.Text += e.SearchResponse.Header;
                 devices.Add(
                     new Models.Device
                     {
