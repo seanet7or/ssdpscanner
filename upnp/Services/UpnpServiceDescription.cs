@@ -1,10 +1,11 @@
 ﻿using System.Xml;
+using ssdp;
 using Upnp;
 using utils.Logging;
 
 namespace upnp.Services
 {
-    public class UpnpServiceDescription
+    public class UpnpServiceDescription(IUpnpDeviceService service, IHttpClient httpClient)
     {
         // REQUIRED. In service templates, defines the lowest version of the architecture on which the service can be implemented.
         // In actual UPnP services, defines the architecture on which the service is implemented.
@@ -12,27 +13,15 @@ namespace upnp.Services
 
         internal ActionList? ActionList { get; private set; }
 
-        internal Url? AbsoluteServiceControlUrl
-        {
-            get { return deviceService?.AbsoluteServiceControlUrl; }
-        }
+        internal Url? AbsoluteServiceControlUrl => deviceService?.AbsoluteServiceControlUrl;
 
-        internal string? ServiceTypeUri
-        {
-            get { return deviceService?.ServiceTypeUri; }
-        }
+        internal string? ServiceTypeUri => deviceService?.ServiceTypeUri;
 
         internal ServiceStateTable? ServiceStateTable { get; private set; }
 
-        readonly IUpnpDeviceService deviceService;
+        readonly IUpnpDeviceService deviceService = service;
 
-        readonly IHttpClient httpClient;
-
-        public UpnpServiceDescription(IUpnpDeviceService service, IHttpClient httpClient)
-        {
-            this.httpClient = httpClient;
-            deviceService = service;
-        }
+        readonly IHttpClient httpClient = httpClient;
 
         internal async Task<bool> ReadDescriptionAsync()
         {

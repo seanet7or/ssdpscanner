@@ -15,9 +15,6 @@ namespace Ssdp
             return base.BeginReceive((ar) => receiveCallback(ar), client);
         }
 
-        public bool Connected
-        {
-            get { return Client != null; }
-        }
+        public bool Connected => Client != null;
     }
 }

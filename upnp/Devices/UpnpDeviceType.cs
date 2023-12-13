@@ -1,8 +1,8 @@
 ﻿namespace upnp.Devices
 {
-    class UpnpDeviceType : IUpnpDeviceType
+    class UpnpDeviceType(string deviceTypeUri) : IUpnpDeviceType
     {
-        readonly string deviceTypeUri;
+        readonly string deviceTypeUri = deviceTypeUri;
 
         public StandardDeviceType StandardDeviceType
         {
@@ -25,14 +25,6 @@
         }
 
         // schemas-upnp-org für Standardgeräte
-        public string VendorDomainName
-        {
-            get { return deviceTypeUri.Split(':')[1]; }
-        }
-
-        public UpnpDeviceType(string deviceTypeUri)
-        {
-            this.deviceTypeUri = deviceTypeUri;
-        }
+        public string VendorDomainName => deviceTypeUri.Split(':')[1];
     }
 }

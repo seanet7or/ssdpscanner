@@ -2,10 +2,7 @@
 {
     public class ArgTypeSortCriteria : List<string>
     {
-        public static ArgTypeSortCriteria NoSort
-        {
-            get { return []; }
-        }
+        public static ArgTypeSortCriteria NoSort => [];
 
         public override string ToString()
         {

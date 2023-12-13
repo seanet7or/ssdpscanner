@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using ssdp;
 using upnp.Services;
 using upnp.Services.ContentDirectory;
 using utils.Logging;
@@ -28,10 +29,8 @@ namespace upnp.Devices
             }
         }
 
-        public IContentDirectory? ContentDirectory
-        {
-            get { return _services?.OfType<IContentDirectory>().FirstOrDefault(); }
-        }
+        public IContentDirectory? ContentDirectory =>
+            _services?.OfType<IContentDirectory>().FirstOrDefault();
 
         public string? GetModelDescription()
         {
@@ -86,10 +85,7 @@ namespace upnp.Devices
         // Required if and only if device has one or more icons. Specified by UPnP vendor.
         public IconList? IconList { get; private set; }
 
-        public IEnumerable<UpnpService> Services
-        {
-            get { return _services; }
-        }
+        public IEnumerable<UpnpService> Services => _services;
 
         readonly List<UpnpService> _services = [];
 

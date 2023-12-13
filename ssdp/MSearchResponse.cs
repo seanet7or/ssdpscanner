@@ -15,7 +15,7 @@ namespace Ssdp
 
         // Description, Single absolute URL, required
         // URL to the UPnP description of the root device
-        public string Location { get; private set; }
+        public Url Location { get; private set; }
 
         // OS/version UPnP/2.0 product/version, required
         public string? Server { get; private set; }
@@ -29,20 +29,15 @@ namespace Ssdp
 
         public string? Header { get; private set; }
 
-        public bool IsValid
-        {
-            get
-            {
-                return validResponseLine
-                    && (secondsToCache >= 0)
-                    && (!string.IsNullOrEmpty(Location))
-                    && (!string.IsNullOrEmpty(Server))
-                    && (!string.IsNullOrEmpty(SearchTarget))
-                    && (!string.IsNullOrEmpty(Usn))
-                    && (!string.IsNullOrEmpty(Id))
-                    && (!Id.Equals(Guid.Empty));
-            }
-        }
+        public bool IsValid =>
+            validResponseLine
+            && (secondsToCache >= 0)
+            && (!string.IsNullOrEmpty(Location.ToString()))
+            && (!string.IsNullOrEmpty(Server))
+            && (!string.IsNullOrEmpty(SearchTarget))
+            && (!string.IsNullOrEmpty(Usn))
+            && (!string.IsNullOrEmpty(Id))
+            && (!Id.Equals(Guid.Empty));
 
         public MSearchResponse(string receivedHeader)
         {
@@ -77,7 +72,7 @@ namespace Ssdp
                         }
                         else if (line.StartsWith("LOCATION:", StringComparison.OrdinalIgnoreCase))
                         {
-                            Location = line[9..].Trim();
+                            Location = new Url(line[9..].Trim());
                         }
                         else if (line.StartsWith("SERVER:", StringComparison.OrdinalIgnoreCase))
                         {

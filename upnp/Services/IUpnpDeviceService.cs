@@ -1,4 +1,6 @@
-﻿namespace upnp.Services
+﻿using ssdp;
+
+namespace upnp.Services
 {
     public interface IUpnpDeviceService
     {

@@ -1,13 +1,8 @@
 ﻿namespace upnp.Services.ContentDirectory
 {
-    public class BrowseResponse
+    public class BrowseResponse(ArgTypeResult res)
     {
-        public BrowseResponse(ArgTypeResult res)
-        {
-            _result = res;
-        }
-
-        readonly ArgTypeResult _result;
+        readonly ArgTypeResult _result = res;
 
         // This variable is used in conjunction with those actions that include a Result parameter.
         // The structure of the result is a DIDL-Lite XML fragment:
@@ -16,10 +11,7 @@
         // • <container> is the tag representing container objects.
         // • <item> is the tag representing item objects.
         // • Tags in the Dublin Core (dc) and UPnP (upnp) namespaces represent object metadata.
-        public ArgTypeResult Result
-        {
-            get { return _result; }
-        }
+        public ArgTypeResult Result => _result;
 
         // ContainerUpdateID (see Terms, sec. 2.5.21)of the container being described if a container is specified in ObjectID.
         // If the control point has an UpdateID for the container that is not equal to the UpdateID last returned, then the

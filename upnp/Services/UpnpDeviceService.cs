@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using ssdp;
 using upnp.Devices;
 using utils.Logging;
 
@@ -6,20 +7,10 @@ namespace upnp.Services
 {
     class UpnpDeviceService : IUpnpDeviceService
     {
-        public string? ServiceTypeUri
-        {
-            get { return ServiceType?.ServiceTypeUri; }
-        }
+        public string? ServiceTypeUri => ServiceType?.ServiceTypeUri;
 
-        public Url? AbsoluteServiceDescriptionUrl
-        {
-            get
-            {
-                return _scpdUrl != null
-                    ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_scpdUrl)
-                    : null;
-            }
-        }
+        public Url? AbsoluteServiceDescriptionUrl =>
+            _scpdUrl != null ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_scpdUrl) : null;
 
         // Required. URL for service description (nee Service Control Protocol Definition URL).
         // (cf. section below on service description.) May be relative to base URL. Specified by UPnP vendor. Single URL.
@@ -32,15 +23,10 @@ namespace upnp.Services
         // Specified by UPnP vendor. Single URL.
         public string? EventSubURL { get; private set; }
 
-        public Url? AbsoluteServiceControlUrl
-        {
-            get
-            {
-                return (_controlUrl != null)
-                    ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_controlUrl)
-                    : null;
-            }
-        }
+        public Url? AbsoluteServiceControlUrl =>
+            (_controlUrl != null)
+                ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_controlUrl)
+                : null;
 
         // Required. URL for control (cf. section on Control). May be relative to base URL. Specified by UPnP vendor. Single URL.
         readonly Url? _controlUrl;

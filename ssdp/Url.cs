@@ -1,6 +1,6 @@
 ﻿using utils.Logging;
 
-namespace upnp
+namespace ssdp
 {
     /*
      *
@@ -28,7 +28,7 @@ namespace upnp
             {
                 res = res + "//" + Authority;
             }
-            res = res + Path;
+            res += Path;
             if (HasQuery)
             {
                 res = res + "?" + Query;
@@ -40,40 +40,25 @@ namespace upnp
             return res;
         }
 
-        bool HasScheme
-        {
-            get { return !string.IsNullOrEmpty(Scheme); }
-        }
+        bool HasScheme => !string.IsNullOrEmpty(Scheme);
 
         public string? Scheme { get; set; }
 
         public string? Authority { get; set; }
 
-        bool HasAuthority
-        {
-            get { return !string.IsNullOrEmpty(Authority); }
-        }
+        bool HasAuthority => !string.IsNullOrEmpty(Authority);
 
-        bool IsPathEmpty
-        {
-            get { return string.IsNullOrEmpty(Path); }
-        }
+        bool IsPathEmpty => string.IsNullOrEmpty(Path);
 
         string? Path { get; set; }
 
         string? Query { get; set; }
 
-        bool HasQuery
-        {
-            get { return !string.IsNullOrEmpty(Query); }
-        }
+        bool HasQuery => !string.IsNullOrEmpty(Query);
 
         string? Fragment { get; set; }
 
-        bool HasFragment
-        {
-            get { return !string.IsNullOrEmpty(Fragment); }
-        }
+        bool HasFragment => !string.IsNullOrEmpty(Fragment);
 
         public Url()
         {
@@ -91,7 +76,7 @@ namespace upnp
                 string urlWoQuery = url.Split('?')[0];
                 string urlWoScheme;
 
-                if (urlWoQuery.Contains(":"))
+                if (urlWoQuery.Contains(':'))
                 {
                     Scheme = url.Split(':')[0];
                     urlWoScheme = url[(Scheme.Length + 1)..];
@@ -106,7 +91,7 @@ namespace upnp
                 if (urlWoScheme.StartsWith("//", StringComparison.Ordinal))
                 {
                     urlWoScheme = urlWoScheme[2..];
-                    if (urlWoScheme.Contains("/"))
+                    if (urlWoScheme.Contains('/'))
                     {
                         Authority = urlWoScheme.Split('/')[0];
                         pathQueryFragment = "/" + urlWoScheme.Split('/')[1];
@@ -124,7 +109,7 @@ namespace upnp
                 }
 
                 string queryFragment;
-                if (pathQueryFragment.Contains("?"))
+                if (pathQueryFragment.Contains('?'))
                 {
                     Path = pathQueryFragment.Split('?')[0];
                     queryFragment = pathQueryFragment.Split('?')[1];
@@ -135,7 +120,7 @@ namespace upnp
                     queryFragment = string.Empty;
                 }
 
-                if (queryFragment.Contains("#"))
+                if (queryFragment.Contains('#'))
                 {
                     Query = queryFragment.Split('#')[0];
                     Fragment = queryFragment.Split('#')[1];
@@ -191,9 +176,7 @@ namespace upnp
                             {
                                 if (
                                     relativeReference.Path != null
-                                    && relativeReference
-                                        .Path
-                                        .StartsWith("/", StringComparison.Ordinal)
+                                    && relativeReference.Path.StartsWith('/')
                                 )
                                 {
                                     mergedPath = relativeReference.Path;
@@ -207,9 +190,7 @@ namespace upnp
                             {
                                 if (
                                     relativeReference.Path != null
-                                    && relativeReference
-                                        .Path
-                                        .StartsWith("/", StringComparison.Ordinal)
+                                    && relativeReference.Path.StartsWith('/')
                                 )
                                 {
                                     mergedPath =
@@ -303,12 +284,12 @@ namespace upnp
                         int segSep = input.IndexOf('/', 1);
                         if (segSep >= 0)
                         {
-                            output = output + input[..segSep];
+                            output += input[..segSep];
                             input = input[segSep..];
                         }
                         else
                         {
-                            output = output + input;
+                            output += input;
                             input = string.Empty;
                         }
                     }

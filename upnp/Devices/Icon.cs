@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Xml;
+using ssdp;
 using utils.Logging;
 
 namespace upnp.Devices
@@ -58,15 +59,10 @@ namespace upnp.Devices
             return false;
         }
 
-        public Url? AbsoluteUrl
-        {
-            get
-            {
-                return _relativeUrl != null
-                    ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_relativeUrl)
-                    : null;
-            }
-        }
+        public Url? AbsoluteUrl =>
+            _relativeUrl != null
+                ? device.BaseUrl?.ResolveRelativeToThisBaseUrl(_relativeUrl)
+                : null;
 
         readonly Url? _relativeUrl;
 
