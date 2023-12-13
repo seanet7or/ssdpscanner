@@ -1,9 +1,11 @@
-﻿namespace UpnpExplorer.Models
+﻿using ssdp;
+
+namespace UpnpExplorer.Models
 {
-    public class Device
+    public class Device(Url location)
     {
         public string DisplayName { get; set; } = string.Empty;
 
-        public string Location { get; set; } = string.Empty;
+        public Url Location { get; } = location;
     }
 }

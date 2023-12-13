@@ -57,34 +57,22 @@ namespace upnp.Services.ContentDirectory
             return false;
         }
 
-        public uint BitsPerSample
-        {
-            get { return _bitsPerSample; }
-        }
+        public uint BitsPerSample => _bitsPerSample;
 
         readonly uint _bitsPerSample = 0;
 
         // Number of audio channels, e.g., 1 for mono, 2 for stereo, 6 for Dolby Surround
-        public uint NrAudioChannels
-        {
-            get { return _nrAudioChannels; }
-        }
+        public uint NrAudioChannels => _nrAudioChannels;
 
         readonly uint _nrAudioChannels = 0;
 
         // Sample audio freq in Hz
-        public uint SampleFrequency
-        {
-            get { return _sampleFrequency; }
-        }
+        public uint SampleFrequency => _sampleFrequency;
 
         readonly uint _sampleFrequency = 0;
 
         // Bitrate in bytes/seconds of the encoding of the resource
-        public uint Bitrate
-        {
-            get { return _bitrate; }
-        }
+        public uint Bitrate => _bitrate;
 
         readonly uint _bitrate = 0;
 
@@ -102,32 +90,20 @@ namespace upnp.Services.ContentDirectory
         public string Uri { get; private set; }
 
         // XAuflösung in Pixel
-        public int HorizontalResolution
-        {
-            get { return _horizontalPixels; }
-        }
+        public int HorizontalResolution => _horizontalPixels;
 
         readonly int _horizontalPixels = -1;
 
         // YAuflösung in Pixel
-        public int VerticalResolution
-        {
-            get { return _verticalResolution; }
-        }
+        public int VerticalResolution => _verticalResolution;
 
         readonly int _verticalResolution = -1;
 
-        public long SizeInBytes
-        {
-            get { return _sizeInBytes; }
-        }
+        public long SizeInBytes => _sizeInBytes;
 
         readonly long _sizeInBytes = -1;
 
-        public int ColorDepth
-        {
-            get { return _colorDepth; }
-        }
+        public int ColorDepth => _colorDepth;
 
         readonly int _colorDepth = -1;
 

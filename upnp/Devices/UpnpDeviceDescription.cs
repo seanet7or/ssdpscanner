@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using Ssdp;
+using ssdp;
 using Upnp;
 using upnp.Services;
 using upnp.Services.ContentDirectory;
@@ -13,10 +14,7 @@ namespace upnp.Devices
 
         internal SpecVersion? SpecVersion { get; private set; }
 
-        public IUpnpDevice? Device
-        {
-            get { return _device; }
-        }
+        public IUpnpDevice? Device => _device;
         UpnpDevice? _device;
         readonly IHttpClient httpClient = httpClient;
 
@@ -49,7 +47,10 @@ namespace upnp.Devices
                     return false;
                 }
                 var langCode = LanguageCode();
-                var xmlStream = await httpClient.GetAsync(langCode, searchResponse.Location);
+                var xmlStream = await httpClient.GetAsync(
+                    langCode,
+                    searchResponse.Location.ToString()
+                );
                 var xmlReader = XmlReader.Create(xmlStream);
 
                 while (xmlReader.Read())
@@ -138,7 +139,7 @@ namespace upnp.Devices
 
             if (string.IsNullOrEmpty(urlBase))
             {
-                urlBase = searchResponse.Location;
+                urlBase = searchResponse.Location.ToString();
             }
             if (_device != null && !string.IsNullOrEmpty(urlBase))
             {

@@ -6,10 +6,7 @@ namespace upnp.Services.ContentDirectory
 {
     public class UpnpContainer : UpnpObject
     {
-        public IEnumerable<string> SearchClasses
-        {
-            get { return _searchClasses; }
-        }
+        public IEnumerable<string> SearchClasses => _searchClasses;
 
         readonly List<string> _searchClasses = [];
 
@@ -18,10 +15,7 @@ namespace upnp.Services.ContentDirectory
 
         // When true, the ability to perform a Search action under a container is enabled, otherwise a Search under that container will
         // return no results. The default value of this attribute when if it is absent on a container is false.
-        public bool Searchable
-        {
-            get { return _searchable; }
-        }
+        public bool Searchable => _searchable;
 
         readonly bool _searchable = false;
 

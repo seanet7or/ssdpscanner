@@ -13,10 +13,7 @@ namespace upnp.Services
         readonly string? defaultValue;
 #pragma warning restore IDE0052 // Remove unread private members
 
-        internal IEnumerable<string>? AllowedValueList
-        {
-            get { return _allowedValueList; }
-        }
+        internal IEnumerable<string>? AllowedValueList => _allowedValueList;
 
         List<string>? _allowedValueList;
 

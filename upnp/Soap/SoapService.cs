@@ -3,19 +3,12 @@ using System.Xml;
 
 namespace upnp.Soap
 {
-    class SoapService
+    class SoapService(string controlUrl, string serviceTypeUri, IHttpClient httpClient)
     {
-        readonly string controlUrl;
-        readonly string serviceTypeUri;
+        readonly string controlUrl = controlUrl;
+        readonly string serviceTypeUri = serviceTypeUri;
 
-        readonly IHttpClient httpClient;
-
-        public SoapService(string controlUrl, string serviceTypeUri, IHttpClient httpClient)
-        {
-            this.controlUrl = controlUrl;
-            this.serviceTypeUri = serviceTypeUri;
-            this.httpClient = httpClient;
-        }
+        readonly IHttpClient httpClient = httpClient;
 
         internal async Task<IEnumerable<ISoapActionResponseArgument>> CallActionAsync(
             string actionName

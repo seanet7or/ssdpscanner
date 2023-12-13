@@ -4,20 +4,12 @@
     // template, section 2.5.2). If not present, then the content has not yet been fully imported by CDS and is not yet accesible for
     // playback purposes.
     // <protocol>’:’ <network>’:’<contentFormat>’:’<additionalInfo>
-    public class UpnpProtocolInfo
+    public class UpnpProtocolInfo(string value)
     {
-        readonly string rawValue;
-
-        public UpnpProtocolInfo(string value)
-        {
-            rawValue = value;
-        }
+        readonly string rawValue = value;
 
         // Mime-Type bei HttpGet
-        public string ContentFormat
-        {
-            get { return rawValue.Split(':')[2]; }
-        }
+        public string ContentFormat => rawValue.Split(':')[2];
 
         public UpnpProtocol Protocol
         {

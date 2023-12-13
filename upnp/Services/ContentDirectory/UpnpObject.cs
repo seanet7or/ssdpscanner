@@ -52,17 +52,11 @@ namespace upnp.Services.ContentDirectory
             return null;
         }
 
-        public IList<UpnpResource> ResourceFiles
-        {
-            get { return _resourceFiles; }
-        }
+        public IList<UpnpResource> ResourceFiles => _resourceFiles;
 
         readonly List<UpnpResource> _resourceFiles = [];
 
-        public IList<string>? Rights
-        {
-            get { return _rights; }
-        }
+        public IList<string>? Rights => _rights;
 
         readonly List<string> _rights = [];
 

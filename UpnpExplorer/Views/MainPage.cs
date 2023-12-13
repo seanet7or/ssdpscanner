@@ -6,16 +6,17 @@ namespace UpnpExplorer.Views;
 public class MainPage : ContentPage
 {
     readonly ObservableCollection<Models.Device> devices = [];
-    private ListView deviceListView;
+    private readonly ListView deviceListView;
 
     public MainPage()
     {
-        ToolbarItem item = new ToolbarItem
-        {
-            Text = "Scan",
-            IconImageSource = ImageSource.FromFile("refresh_black_24dp.png"),
-            Command = new Command(async () => await Refresh())
-        };
+        ToolbarItem item =
+            new()
+            {
+                Text = "Scan",
+                IconImageSource = ImageSource.FromFile("refresh_black_24dp.png"),
+                Command = new Command(async () => await Refresh())
+            };
         ToolbarItems.Add(item);
 
         deviceListView = new ListView
@@ -45,9 +46,9 @@ public class MainPage : ContentPage
 
                 return new ViewCell { View = grid };
             }),
-            ItemsSource = devices
+            ItemsSource = devices,
+            RefreshCommand = new Command(async () => await Refresh())
         };
-        deviceListView.RefreshCommand = new Command(async () => await Refresh());
 
         Content = deviceListView;
     }
@@ -77,6 +78,8 @@ public class MainPage : ContentPage
         using var deviceDiscovery = new DeviceDiscovery(addresses);
         deviceDiscovery.DeviceDiscovered += OnDeviceDiscovered;
         await deviceDiscovery.SearchAsync(5);
+
+        //await deviceDiscovery.GetDevicesAsync("ssdp:all");
     }
 
     void OnDeviceDiscovered(object? sender, DeviceDiscoveredEventArgs e)
@@ -85,13 +88,12 @@ public class MainPage : ContentPage
 
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            if (!devices.Any((d) => d.Location == location))
+            if (!devices.Any((d) => d.Location.ToString() == location.ToString()))
             {
                 devices.Add(
-                    new Models.Device
+                    new Models.Device(e.SearchResponse.Location)
                     {
                         DisplayName = (e.SearchResponse.Server ?? "") + e.SearchResponse.Usn,
-                        Location = e.SearchResponse.Location
                     }
                 );
             }

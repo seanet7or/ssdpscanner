@@ -2,10 +2,7 @@
 {
     class UpnpServiceType : IUpnpServiceType
     {
-        public string ServiceTypeUri
-        {
-            get { return _serviceTypeUri; }
-        }
+        public string ServiceTypeUri => _serviceTypeUri;
 
         public StandardServiceType StandardServiceType
         {
@@ -24,10 +21,7 @@
         }
 
         // schemas-upnp-org für Standardgeräte
-        public string VendorDomainName
-        {
-            get { return _serviceTypeUri.Split(':')[1]; }
-        }
+        public string VendorDomainName => _serviceTypeUri.Split(':')[1];
 
         internal UpnpServiceType(string serviceTypeUri)
         {
