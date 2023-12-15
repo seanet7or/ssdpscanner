@@ -1,19 +1,21 @@
 using System.Collections.ObjectModel;
 using Ssdp;
+using UpnpExplorer.Resources.Strings;
 
 namespace UpnpExplorer.Views;
 
-public class MainPage : ContentPage
+public class DevicesPage : ContentPage
 {
     readonly ObservableCollection<Models.Device> devices = [];
     private readonly ListView deviceListView;
 
-    public MainPage()
+    public DevicesPage()
     {
+        Title = AppResources.DevicesPageTitle;
         ToolbarItem item =
             new()
             {
-                Text = "Scan",
+                Text = AppResources.DevicesScanButton,
                 IconImageSource = ImageSource.FromFile("refresh_black_24dp.png"),
                 Command = new Command(async () => await Refresh())
             };

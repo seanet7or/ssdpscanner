@@ -1,9 +1,12 @@
+using UpnpExplorer.Resources.Strings;
+
 namespace UpnpExplorer.Views;
 
 public class AboutPage : ContentPage
 {
     public AboutPage()
     {
+        Title = AppResources.AboutPageTitle;
         Content = new VerticalStackLayout
         {
             Children =
